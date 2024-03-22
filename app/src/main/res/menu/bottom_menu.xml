@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/setting"
+        android:icon="@drawable/settings"
+        android:title="setting" />
+    <item
+        android:id="@+id/expense"
+        android:icon="@drawable/baseline_currency_exchange_24"
+        android:title="income_expense" />
+    <item
+        android:id="@+id/blank"
+        android:title="" />
+    <item
+        android:id="@+id/moodboard"
+        android:icon="@drawable/moodboard"
+        android:title="moodboard" />
+    <item
+        android:id="@+id/locationFragment"
+        android:icon="@drawable/locat"
+        android:title="location" />
+</menu>
