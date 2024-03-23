@@ -43,7 +43,8 @@ class LocationFragment @Inject constructor() : Fragment(), TapItemListener {
         ActivityResultContracts.GetContent()
     ) { uris: Uri? ->
         if (uris != null) {
-            val bind =  (binding.locationRv.findViewHolderForAdapterPosition(addPosition) as LocationViewHolder).getBinding()
+            val bind =
+                (binding.locationRv.findViewHolderForAdapterPosition(addPosition) as LocationViewHolder).getBinding()
 
             val inflater = LayoutInflater.from(binding.root.context)
             val imageHolder = ImageHolderBinding.inflate(inflater)
@@ -135,7 +136,7 @@ class LocationFragment @Inject constructor() : Fragment(), TapItemListener {
     private fun observeLocations() {
         vm.getData()
         vm.locations.observe(viewLifecycleOwner) {
-            it?.forEach{ item->
+            it?.forEach { item ->
                 locationAdapter.updateRecycler(item)
             }
         }
