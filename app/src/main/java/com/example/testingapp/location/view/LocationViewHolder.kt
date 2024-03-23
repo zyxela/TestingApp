@@ -5,12 +5,15 @@ import android.annotation.SuppressLint
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.CheckBox
 import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.core.view.forEach
+import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.testingapp.R
@@ -24,12 +27,25 @@ class LocationViewHolder(private val binding: RvLocationItemBinding) :
 
 
     @SuppressLint("MissingInflatedId")
-    fun onBind(data: LocationResponse, tapListener: TapItemListener) {
+    fun onBind(position:Int, data: LocationResponse, tapListener: TapItemListener) {
         binding.etLocationName.setText(data.name)
         binding.addPhoto.setOnClickListener {
-            tapListener.addPosition = data.uid
+            tapListener.addPosition = position
             tapListener.getImageUri()
         }
+        binding.etLocationName.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                tapListener.locationList[position].name = s.toString()
+            }
+
+        })
 
         data.images.forEach { img ->
             val inflater = LayoutInflater.from(binding.root.context)
@@ -41,5 +57,8 @@ class LocationViewHolder(private val binding: RvLocationItemBinding) :
         }
 
 
+    }
+    fun getBinding(): RvLocationItemBinding {
+        return binding
     }
 }

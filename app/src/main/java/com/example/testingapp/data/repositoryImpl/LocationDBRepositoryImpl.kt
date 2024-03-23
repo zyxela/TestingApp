@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class LocationDBRepositoryImpl @Inject constructor(private val db: AppDatabase) :
     LocationDBRepository {
-    override suspend fun getLocations(): List<LocationResponse> = withContext(Dispatchers.IO){
+    override suspend fun getLocations(): List<LocationResponse> = withContext(Dispatchers.IO) {
         return@withContext db.locationDao().getAll()
     }
 

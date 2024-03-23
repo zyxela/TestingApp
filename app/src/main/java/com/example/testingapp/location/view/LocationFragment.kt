@@ -14,6 +14,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.testingapp.R
+import com.example.testingapp.data.models.LocationResponse
 import com.example.testingapp.databinding.ImageHolderBinding
 import com.example.testingapp.databinding.LocationFragmentBinding
 import com.example.testingapp.location.LocationViewModel
@@ -28,6 +29,7 @@ class LocationFragment @Inject constructor() : Fragment(), TapItemListener {
     override var addPosition: Int = 0
 
     override val position: MutableList<Int> = mutableListOf()
+    override var locationList: MutableList<LocationResponse> = mutableListOf()
 
     val vm: LocationViewModel by viewModels<LocationViewModel>()
 
@@ -41,12 +43,13 @@ class LocationFragment @Inject constructor() : Fragment(), TapItemListener {
         ActivityResultContracts.GetContent()
     ) { uris: Uri? ->
         if (uris != null) {
-            val bind = locationAdapter.holders[addPosition]
+            val bind =  (binding.locationRv.findViewHolderForAdapterPosition(addPosition) as LocationViewHolder).getBinding()
+
             val inflater = LayoutInflater.from(binding.root.context)
             val imageHolder = ImageHolderBinding.inflate(inflater)
             imageHolder.apply {
                 iv.setImageURI(uris)
-
+                locationList[addPosition].images.add(uris.toString())
                 this.root.setOnClickListener {
                     val bundle = Bundle()
                     bundle.putString("Uri", uris.toString())
@@ -95,8 +98,8 @@ class LocationFragment @Inject constructor() : Fragment(), TapItemListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        //vm.clear()
         backListener()
-        locationAdapter.addNewLocation()
         binding = LocationFragmentBinding.inflate(inflater)
         return binding.root
     }
@@ -117,7 +120,8 @@ class LocationFragment @Inject constructor() : Fragment(), TapItemListener {
         }
 
         binding.refreshAfisha.setOnRefreshListener {
-            vm.saveData(locationAdapter.locationList)
+            val x = locationList
+            vm.saveData(locationList)
             locationAdapter.addNewLocation()
             binding.refreshAfisha.isRefreshing = false
         }
@@ -156,6 +160,6 @@ class LocationFragment @Inject constructor() : Fragment(), TapItemListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        vm.saveData(locationAdapter.locationList)
+        vm.saveData(locationList)
     }
 }

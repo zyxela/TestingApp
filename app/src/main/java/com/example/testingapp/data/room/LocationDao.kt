@@ -13,7 +13,7 @@ interface LocationDao {
     fun getAll(): List<LocationResponse>
 
     @Insert
-    fun insertAll(vararg locationresponse: LocationResponse)
+    fun insertAll(locationResponse: LocationResponse)
 
     @Delete
     fun delete(locationResponse: LocationResponse)

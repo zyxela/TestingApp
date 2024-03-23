@@ -8,6 +8,6 @@ import androidx.room.PrimaryKey
 @Entity
 data class LocationResponse(
     @PrimaryKey val uid: Int,
-    @ColumnInfo(name = "name") val name:String,
+    @ColumnInfo(name = "name") var name:String,
     @ColumnInfo(name="images")val images:ArrayList<String>
 )

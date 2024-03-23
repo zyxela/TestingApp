@@ -4,7 +4,6 @@ import org.jetbrains.kotlin.storage.CacheResetOnProcessCanceled.enabled
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
-    id("com.google.gms.google-services")
     id("com.google.dagger.hilt.android")
     kotlin("kapt")
 
@@ -68,9 +67,7 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     annotationProcessor(libs.androidx.room.compiler)
     kapt(libs.androidx.room.compiler)
-    implementation ("com.google.code.gson:gson:2.10.1")
-
-    implementation(platform("com.google.firebase:firebase-bom:32.7.4"))
+    implementation (libs.gson)
 
     implementation (libs.hilt.android)
     kapt(libs.dagger.compiler)

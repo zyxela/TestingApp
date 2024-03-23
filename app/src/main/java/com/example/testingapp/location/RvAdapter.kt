@@ -10,28 +10,27 @@ import com.example.testingapp.data.models.LocationResponse
 
 class RvAdapter(private val tapListener: TapItemListener) :
     RecyclerView.Adapter<LocationViewHolder>() {
-    var locationList = mutableListOf<LocationResponse>()
-    val holders: MutableList<RvLocationItemBinding> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocationViewHolder {
         val item = RvLocationItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        holders.add(item)
         return LocationViewHolder(item)
     }
 
-    override fun getItemCount(): Int = locationList.size
+    override fun getItemCount(): Int = tapListener.locationList.size
 
     override fun onBindViewHolder(holder: LocationViewHolder, position: Int) {
-        holder.onBind(locationList[position], tapListener)
+        holder.onBind(position, tapListener.locationList[position], tapListener)
     }
 
+
     fun addNewLocation() {
-        locationList.add(0, LocationResponse(locationList.size, "", arrayListOf()))
+        val index = tapListener.locationList.size
+        tapListener.locationList.add(0, LocationResponse(index, "", arrayListOf()))
         notifyItemInserted(0)
     }
 
     fun updateRecycler(data: LocationResponse) {
-        locationList.add(data)
+        tapListener.locationList.add(data)
         notifyItemInserted(data.uid)
     }
 
