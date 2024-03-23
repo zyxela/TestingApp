@@ -19,9 +19,8 @@ class LocationViewModel @Inject constructor(private val repository: LocationDBRe
         viewModelScope.launch {
             repository.deleteAll()
 
-            data.forEach {
-                repository.insertItem(it)
-            }
+                repository.insertItem(data)
+
 
 
         }

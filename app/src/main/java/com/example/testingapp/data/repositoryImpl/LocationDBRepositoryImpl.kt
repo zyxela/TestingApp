@@ -13,8 +13,13 @@ class LocationDBRepositoryImpl @Inject constructor(private val db: AppDatabase) 
         return@withContext db.locationDao().getAll()
     }
 
-    override suspend fun insertItem(locationResponse: LocationResponse) = withContext(Dispatchers.IO){
-        db.locationDao().insertAll(locationResponse)
+    override suspend fun insertItem(locationResponse: List<LocationResponse>) = withContext(Dispatchers.IO){
+        db.runInTransaction{
+            for (lr in locationResponse) {
+                db.locationDao().insertAll(lr)
+            }
+
+        }
     }
 
     override suspend fun deleteAll() = withContext(Dispatchers.IO){

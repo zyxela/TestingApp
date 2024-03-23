@@ -99,7 +99,7 @@ class LocationFragment @Inject constructor() : Fragment(), TapItemListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        //vm.clear()
+        vm.clear()
         backListener()
         binding = LocationFragmentBinding.inflate(inflater)
         return binding.root
@@ -109,6 +109,7 @@ class LocationFragment @Inject constructor() : Fragment(), TapItemListener {
         super.onViewCreated(view, savedInstanceState)
         setRecyclerView()
         observeLocations()
+
     }
 
     private fun setRecyclerView() {
@@ -138,7 +139,10 @@ class LocationFragment @Inject constructor() : Fragment(), TapItemListener {
         vm.locations.observe(viewLifecycleOwner) {
             it?.forEach { item ->
                 locationAdapter.updateRecycler(item)
+            }?.also {
+                locationAdapter.addNewLocation()
             }
+
         }
     }
 
