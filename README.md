@@ -1,7 +1,7 @@
 # INSTRUCTION
 To add new card or save current data just refresh page
 
-#P.s
+# P.s
 This application was made without firebase
 
 # SUMMARY
