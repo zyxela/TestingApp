@@ -17,12 +17,7 @@ class LocationViewModel @Inject constructor(private val repository: LocationDBRe
 
     fun saveData(data: List<LocationResponse>) {
         viewModelScope.launch {
-            repository.deleteAll()
-
-                repository.insertItem(data)
-
-
-
+            repository.insertItem(data)
         }
     }
 

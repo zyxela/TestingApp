@@ -9,15 +9,14 @@ inline fun <reified T> Gson.fromJson(json: String) =
 
 class ArrayListConverter {
     @TypeConverter
-    fun fromStringArrayList(value: ArrayList<String>): String {
-
+    fun fromStringArrayList(value: ArrayList<ByteArray>): String {
         return Gson().toJson(value)
     }
 
     @TypeConverter
-    fun toStringArrayList(value: String): ArrayList<String> {
+    fun toStringArrayList(value: String): ArrayList<ByteArray> {
         return try {
-            Gson().fromJson<ArrayList<String>>(value) //using extension function
+            Gson().fromJson<ArrayList<ByteArray>>(value) //using extension function
         } catch (e: Exception) {
             arrayListOf()
         }

@@ -1,12 +1,11 @@
 package com.example.testingapp.location
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.testingapp.data.models.LocationResponse
 import com.example.testingapp.databinding.RvLocationItemBinding
 import com.example.testingapp.location.view.LocationViewHolder
-import com.example.testingapp.data.models.LocationResponse
 
 class RvAdapter(private val tapListener: TapItemListener) :
     RecyclerView.Adapter<LocationViewHolder>() {
@@ -27,11 +26,14 @@ class RvAdapter(private val tapListener: TapItemListener) :
         val index = tapListener.locationList.size
         tapListener.locationList.add(0, LocationResponse(index, "", arrayListOf()))
         notifyItemInserted(0)
+        notifyItemRangeChanged(0, tapListener.locationList.size - 1)
     }
 
     fun updateRecycler(data: LocationResponse) {
         tapListener.locationList.add(data)
         notifyItemInserted(data.uid)
+        notifyItemRangeChanged(0, tapListener.locationList.size - 1)
+
     }
 
     fun repaint(position: Int) {

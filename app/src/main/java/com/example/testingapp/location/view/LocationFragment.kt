@@ -50,7 +50,10 @@ class LocationFragment @Inject constructor() : Fragment(), TapItemListener {
             val imageHolder = ImageHolderBinding.inflate(inflater)
             imageHolder.apply {
                 iv.setImageURI(uris)
-                locationList[addPosition].images.add(uris.toString())
+                val img = requireActivity().contentResolver.openInputStream(uris)?.readBytes()
+                img?.let {
+                    locationList[addPosition].images.add(it)
+                }
                 this.root.setOnClickListener {
                     val bundle = Bundle()
                     bundle.putString("Uri", uris.toString())
@@ -75,7 +78,6 @@ class LocationFragment @Inject constructor() : Fragment(), TapItemListener {
                                 cb.visibility = View.INVISIBLE
                                 if (cb.isChecked) {
                                     delList.add(it)
-
                                 }
 
                             }
@@ -99,7 +101,6 @@ class LocationFragment @Inject constructor() : Fragment(), TapItemListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        vm.clear()
         backListener()
         binding = LocationFragmentBinding.inflate(inflater)
         return binding.root
@@ -122,9 +123,8 @@ class LocationFragment @Inject constructor() : Fragment(), TapItemListener {
         }
 
         binding.refreshAfisha.setOnRefreshListener {
-            val x = locationList
-            vm.saveData(locationList)
             locationAdapter.addNewLocation()
+            vm.saveData(locationList)
             binding.refreshAfisha.isRefreshing = false
         }
     }
@@ -139,9 +139,11 @@ class LocationFragment @Inject constructor() : Fragment(), TapItemListener {
         vm.locations.observe(viewLifecycleOwner) {
             it?.forEach { item ->
                 locationAdapter.updateRecycler(item)
-            }?.also {
+            }
+            it?.apply {
                 locationAdapter.addNewLocation()
             }
+
 
         }
     }
