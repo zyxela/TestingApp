@@ -21,12 +21,6 @@ class LocationViewModel @Inject constructor(private val repository: LocationDBRe
         }
     }
 
-    fun clear(){
-        viewModelScope.launch {
-            repository.deleteAll()
-        }
-
-    }
 
     fun getData() {
         viewModelScope.launch {
